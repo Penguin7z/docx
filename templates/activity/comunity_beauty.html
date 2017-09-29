@@ -1,0 +1,119 @@
+{% extends "master.html" %}
+
+{% block cus_content_title %}
+    最美社群天使报表
+{% endblock %}
+
+{% block cus_content %}
+
+    <div class="box">
+        <div class="box-header">
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <!-- Custom Tabs (Pulled to the right) -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_1-1" data-toggle="tab">每日主数据</a></li>
+                    <li><a href="#tab_1-2" data-toggle="tab">渠道数据</a></li>
+                    <li><a href="#tab_1-3" data-toggle="tab">每日其他数据</a></li>
+                </ul>
+                <div class="tab-content">
+                    <br>
+                    <br>
+                    <div class="tab-pane active" id="tab_1-1">
+                         {% autoescape off %}{{ main }}{% endautoescape %}
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_1-2">
+                            {% autoescape off %}{{ channal }}{% endautoescape %}
+                    </div>
+                    <!-- /.tab-pane -->
+
+                    <div class="tab-pane" id="tab_1-3">
+                            {% autoescape off %}{{ sub }}{% endautoescape %}
+{#                            <thead>#}
+{#                            <tr>#}
+{#                                {% for item in  header_company_gift_list %}#}
+{#                                    <th>{{ item }}</th>#}
+{#                                {% endfor %}#}
+{#                            </tr>#}
+{#                            </thead>#}
+{#                            <tbody>#}
+{##}
+{#                            {% for item in  detail_company_gift_list %}#}
+{#                                <tr>#}
+{#                                    {% for text in  item %}#}
+{#                                        <td>#}
+{#                                            {{ text }}#}
+{#                                        </td>#}
+{#                                    {% endfor %}#}
+{#                                </tr>#}
+{#                            {% endfor %}#}
+{##}
+{#                            </tbody>#}
+{#                            <tfoot>#}
+{#                            <tr>#}
+{#                                {% for item in  header_company_gift_list %}#}
+{#                                    <th>{{ item }}</th>#}
+{#                                {% endfor %}#}
+{#                            </tr>#}
+{#                            </tfoot>#}
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+
+
+{% endblock %}
+
+{% block cus_footer %}
+
+    <script>
+        $(function () {
+            var ids = '';
+            $.each($('.dataframe'), function (index, ele) {
+                $(ele).attr('id', 'dataframe'+index);
+                $(ele).attr('class', 'table table-bordered table-striped dataTable table-hover');
+                $(ele).css('width', '100%');
+                ids += '#dataframe'+index+',';
+            })
+
+            $(ids.substr(0,ids.length-1)).DataTable({
+                "fixedHeader": true,
+                "pageLength":50,
+                "scrollY": "50vh",
+                "scrollX": true,
+                "scrollCollapse": true,
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "language": {
+                    "info": "页 _PAGE_ / _PAGES_",
+                    "lengthMenu": "每页 _MENU_ 条",
+                    "paginate": {
+                        "previous": "向前 ",
+                        "next": " 向后"
+                    }
+                },
+                //"fixedColumns": {
+                //    leftColumns: 1
+                //},
+                "order": [[ 0, "desc" ]]
+
+            });
+        });
+    </script>
+
+{% endblock %}

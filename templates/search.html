@@ -1,0 +1,90 @@
+{% extends "master.html" %}
+
+{% block cus_content_title %}
+    数据检索
+{% endblock %}
+
+{% block cus_search %}
+    {#    <span style="height: 34px; line-height: 34px;">查询类型：</span>#}
+    {#    <select class="form-control select2">#}
+    {#        <option selected="selected">单用户查询（用户ID/手机号/姓名）</option>#}
+    {#        <option>多用户批量查询（用户ID，英文逗号隔开）</option>#}
+    {#        <option>多用户批量查询（手机号，英文逗号隔开）</option>#}
+    {#        <option>多用户批量查询（姓名，英文逗号隔开）</option>#}
+    {#        <option>多用户批量查询（公司ID/公司名）</option>#}
+    {#        <option>多用户批量查询（园区名）</option>#}
+    {#    </select>#}
+
+
+{% endblock %}
+
+{% block cus_content %}
+
+    <!-- /.col -->
+    <div class="col-md-9">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#user-pane" data-toggle="tab">用户查询</a></li>
+                <li><a href="#huoyue-pane" data-toggle="tab">用户活跃度查询</a></li>
+                <li><a href="#timeline" data-toggle="tab">企业查询</a></li>
+                <li><a href="#settings" data-toggle="tab">活动查询</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="user-pane">
+
+                </div>
+                <!-- /.tab-pane -->
+                <div class="huoyue-pane" id="huoyue-pane">
+                    <form class="form-horizontal" method="post" action="">
+                        <div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label">登录次数 >= </label>
+
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="inputName" placeholder="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label">报名活动次数 >= </label>
+
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="inputName" placeholder="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label">支付订单次数 >= </label>
+
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="inputName" placeholder="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label">论坛发帖次数 >= </label>
+
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="inputName" placeholder="0">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="timeline">
+
+                </div>
+                <!-- /.tab-pane -->
+
+                <div class="tab-pane" id="settings">
+
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+
+{% endblock %}

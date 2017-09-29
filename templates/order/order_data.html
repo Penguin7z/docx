@@ -1,0 +1,125 @@
+{% extends "master.html" %}
+
+{% block cus_content_title %}
+    最近7天订单流水
+{% endblock %}
+
+{% block cus_content %}
+
+    <div class="box">
+        <div class="box-header">
+            <div>
+                <div style="display: inline-block"><label>订单筛选：</label></div>
+                <div style="display: inline-block">
+                    <form id="order-select" method="post" aciton="">
+                    {% csrf_token %}
+                    <select class="order-filter" style="width: 100px;" name="or_group">
+                        <option value="0">全部订单</option>
+                        <option value="1">社群中心</option>
+                        <option value="2">停车场</option>
+                        <option value="3">商户</option>
+                    </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="table-content-order-today"
+                   class="table table-bordered table-striped dataTable table-hover">
+                <thead>
+                <tr>
+                    {% for item in  header_list %}
+                        <th>{{ item }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in  detail_list %}
+                    <tr>
+                        <td>
+                            {{ item.c_str }}
+                        </td>
+                        <td>
+                            {{ item.or_num }}
+                        </td>
+                        <td>
+                            {{ item.paer_id }}
+                        </td>
+                        <td>
+                            {{ item.c_name }}
+                        </td>
+                        <td>
+                            {{ item.is_vip }}
+                        </td>
+                        <td>
+                            {{ item.pe_sid }}
+                        </td>
+                        <td>
+                            {{ item.s_name }}
+                        </td>
+                        <td>
+                            {{ item.s_fw_name }}
+                        </td>
+                        <td>
+                            {{ item.ser_type_display }}
+                        </td>
+                        <td>
+                            {{ item.dis_pri }}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+
+
+{% endblock %}
+
+{% block cus_footer %}
+
+    <script>
+        $(function () {
+            $(".order-filter").val(sessionStorage.getItem("or_group") || 0);
+            sessionStorage.removeItem("or_group");
+            $('#table-content-order-today').DataTable({
+                "fixedHeader": true,
+                "pageLength": 25,
+                "scrollY": "50vh",
+                "scrollX": true,
+                "scrollCollapse": true,
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "language": {
+                    "info": "页 _PAGE_ / _PAGES_",
+                    "lengthMenu": "每页 _MENU_ 条",
+                    "paginate": {
+                        "previous": "向前 ",
+                        "next": " 向后"
+                    }
+                },
+                "fixedColumns": {
+                    leftColumns: 1
+                },
+                "order": [[0, "desc"]]
+
+            });
+        });
+
+        $(".order-filter").change(function() {
+            sessionStorage.setItem("or_group", $(".order-filter").val());
+            this.form.submit();
+        });
+    </script>
+
+{% endblock %}

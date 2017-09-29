@@ -1,0 +1,203 @@
+{% extends "master.html" %}
+
+{% block cus_content_title %}
+    情人节活动分析
+{% endblock %}
+
+{% block cus_content %}
+
+    <div class="box">
+        <div class="box-header">
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <!-- Custom Tabs (Pulled to the right) -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_1-1" data-toggle="tab">送花流水分析</a></li>
+                    <li><a href="#tab_1-2" data-toggle="tab">送花用户分析</a></li>
+                    <li><a href="#tab_1-3" data-toggle="tab">参与公司分析</a></li>
+                    <li><a href="#tab_1-4" data-toggle="tab">园区分析</a></li>
+                </ul>
+                <div class="tab-content">
+                    <br>
+                    <br>
+                    <div class="tab-pane active" id="tab_1-1">
+
+                        <table id="table-content-gift" class="table table-bordered table-striped dataTable table-hover">
+                            <thead>
+                            <tr>
+                                {% for item in  header_gift_list %}
+                                    <th>{{ item }}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for item in  detail_gift_list %}
+                                <tr>
+                                    {% for text in  item %}
+                                        <td>
+                                            {{ text }}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                {% for item in  header_list %}
+                                    <th>{{ item }}</th>
+                                {% endfor %}
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_1-2">
+                        <table id="table-content-user-gift" class="table table-bordered table-striped dataTable table-hover">
+                            <thead>
+                            <tr>
+                                {% for item in  header_user_gift_list %}
+                                    <th>{{ item }}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for item in  detail_user_gift_list %}
+                                <tr>
+                                    {% for text in  item %}
+                                        <td>
+                                            {{ text }}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                {% for item in  header_user_gift_list %}
+                                    <th>{{ item }}</th>
+                                {% endfor %}
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                    <div class="tab-pane" id="tab_1-3">
+                        <table id="table-content-company-gift" class="table table-bordered table-striped dataTable table-hover">
+                            <thead>
+                            <tr>
+                                {% for item in  header_company_gift_list %}
+                                    <th>{{ item }}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for item in  detail_company_gift_list %}
+                                <tr>
+                                    {% for text in  item %}
+                                        <td>
+                                            {{ text }}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                {% for item in  header_company_gift_list %}
+                                    <th>{{ item }}</th>
+                                {% endfor %}
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                    <div class="tab-pane" id="tab_1-4">
+                        <table id="table-content-park-gift" class="table table-bordered table-striped dataTable table-hover">
+                            <thead>
+                            <tr>
+                                {% for item in  header_park_gift_list %}
+                                    <th>{{ item }}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for item in  detail_park_gift_list %}
+                                <tr>
+                                    {% for text in  item %}
+                                        <td>
+                                            {{ text }}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                {% for item in  header_park_gift_list %}
+                                    <th>{{ item }}</th>
+                                {% endfor %}
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+
+
+{% endblock %}
+
+{% block cus_footer %}
+
+    <script>
+        $(function () {
+            $('#table-content-gift, #table-content-user-gift, #table-content-company-gift, #table-content-park-gift').DataTable({
+                "fixedHeader": true,
+                "pageLength": 25,
+                "scrollY": "50vh",
+                "scrollX": true,
+                "scrollCollapse": true,
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "language": {
+                    "info": "页 _PAGE_ / _PAGES_",
+                    "lengthMenu": "每页 _MENU_ 条",
+                    "paginate": {
+                        "previous": "向前 ",
+                        "next": " 向后"
+                    }
+                },
+                "fixedColumns": {
+                    leftColumns: 1
+                },
+                "order": [[ 3, "desc" ]]
+
+            });
+        });
+    </script>
+
+{% endblock %}

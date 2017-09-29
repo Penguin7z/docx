@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>数据分析系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}plugins/select2/select2.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}multiple-select/multiple-select.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}dist/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}dist/css/ionicons.min.css">
+
+    <!-- Bootstrap 3.3.6 -->
+    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+          page. However, you can choose any other skin. Make sure you
+          apply the skin class to the body tag so the changes take effect.
+    -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}dist/css/skins/skin-blue.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}dist/css/AdminLTE.min.css">
+
+
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/Bootstrap-3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/DataTables-1.10.13/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/AutoFill-2.1.3/css/autoFill.bootstrap.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/Buttons-1.2.4/css/buttons.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/ColReorder-1.3.2/css/colReorder.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/FixedColumns-3.2.2/css/fixedColumns.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/FixedHeader-3.1.2/css/fixedHeader.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/KeyTable-2.2.0/css/keyTable.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/Responsive-2.1.1/css/responsive.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/RowReorder-1.2.0/css/rowReorder.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/Scroller-1.4.2/css/scroller.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ STATIC_URL }}plugins/datatables/extensions/Select-1.2.0/css/select.bootstrap.min.css"/>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+  <script src="{{ STATIC_URL }}dist/js/html5shiv.min.js"></script>
+  <script src="{{ STATIC_URL }}dist/js/respond.min.js"></script>
+  <![endif]-->
+
+    <style type="text/css">
+        table.dataTable thead .sorting_asc, table.dataTable thead .sorting, table.dataTable thead .sorting_desc {
+            background-repeat: no-repeat;
+            background-position: center right;
+        }
+
+        table.dataTable thead .sorting_asc {
+            background-image: url("{{ STATIC_URL }}plugins/datatables/images/sort_asc.png");
+        }
+
+        table.dataTable thead .sorting {
+            background-image: url("{{ STATIC_URL }}plugins/datatables/images/sort_both.png");
+        }
+
+        table.dataTable thead .sorting_desc {
+            background-image: url("{{ STATIC_URL }}plugins/datatables/images/sort_desc.png");
+        }
+
+        table.dataTable thead .sorting:after {
+            opacity: 0.2;
+            content: none; /* sort */
+        }
+
+        table.dataTable thead .sorting_asc:after {
+            content: none; /* sort-by-attributes */
+        }
+
+        table.dataTable thead .sorting_desc:after {
+            content: none; /* sort-by-attributes-alt */
+        }
+
+        td.highlight {
+            background-color: #fffbf2 !important;
+        }
+
+        thead tr th {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table > tbody > tr > td, tbody tr td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        th, td {
+            white-space: nowrap;
+        }
+
+        .table {
+            width: 100%;
+        }
+
+    </style>
+
+    {% block cus_header %}
+
+    {% endblock %}
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">加载中...</h4>
+            </div>
+            <div class="modal-body">
+                <div class="loading-img">
+                    <img src="{{ STATIC_URL }}images/loading_icon.gif">
+                </div>
+                <div class="modal-body-content">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>BI</b></span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>WE</b>HOME</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <!-- The user image in the navbar-->
+                            <img src="{{ STATIC_URL }}dist/img/wehome-logo.png" class="user-image" alt="User Image">
+                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                            <span class="hidden-xs">{{ view_page.login_name }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- The user image in the menu -->
+                            <li class="user-header">
+                                <img src="{{ STATIC_URL }}dist/img/wehome-logo.png" class="img-circle"
+                                     alt="User Image">
+                                <p>
+                                    {{ view_page.login_name }}
+                                    <small>上次登录 2017.01.02</small>
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <li class="user-body">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">权限设置</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">锁屏</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">皮肤设置</a>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">资料</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="/log_out" class="btn btn-default btn-flat">退出登录</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <!-- search form (Optional) -->
+            <form action="/search" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu">
+                <li class="header"></li>
+                <!-- Optionally, you can add icons to the links -->
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-map"></i>
+                        <span>基础数据</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/base_data"><i class="fa fa-circle-o"></i>基础数据分析</a></li>
+                        <li><a href="/outline/menber_distribution"><i class="fa fa-circle-o"></i>基础数据用户数量</a></li>
+                        <li><a href="/outline/menber_login"><i class="fa fa-circle-o"></i>基础数据用户活跃</a></li>
+                        <li><a href="/outline/order_outline"><i class="fa fa-circle-o"></i>基础数据订单交易</a></li>
+                    </ul>
+                    <!--<a href="/base_data"><i class="fa fa-bank"></i><span>基础数据分析</span>
+                    </a>-->
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-map"></i>
+                        <span>园区数据分析</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/park_data"><i class="fa fa-circle-o"></i>园区基础数据</a></li>
+                        <li><a href="/park_data_park"><i class="fa fa-circle-o"></i>园区基础数据园区维度</a></li>
+                        <li><a href="/park_sep/park_data_member_distribution"><i class="fa fa-circle-o"></i>园区用户分布</a></li>
+                        <li><a href="/park_sep/park_data_member_login"><i class="fa fa-circle-o"></i>园区用户登录</a></li>
+                        <li><a href="/park_sep/park_data_order_distribution"><i class="fa fa-circle-o"></i>园区用户订单</a></li>
+                        <li><a href="/park_sep/park_com_menber_dis"><i class="fa fa-circle-o"></i>园区企业用户</a></li>
+                        <li><a href="/company/all"><i class="fa fa-circle-o"></i>园区企业信息</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-twitter"></i>
+                        <span>活动数据分析</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/activity_data"><i class="fa fa-circle-o"></i> 活动数据分析 </a></li>
+                        <li><a href="/new_activity_data"><i class="fa fa-circle-o"></i> 活动数据分析（分会员） </a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="/user_detail">
+                        <i class="fa fa-twitter"></i>
+                        <span>注册用户明细数据</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="/bbs_data">
+                        <i class="fa fa-twitter"></i>
+                        <span>论坛数据分析</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-twitter"></i>
+                        <span>订单数据分析</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/order_data"><i class="fa fa-circle-o"></i> 7日订单流水 </a></li>
+                        <li><a href="/order_s_data"><i class="fa fa-circle-o"></i> 商户订单报表 </a></li>
+                        <li><a href="/order_s_sum"><i class="fa fa-circle-o"></i> 商户订单统计表 </a></li>
+                        <li><a href="/order_last_week"><i class="fa fa-circle-o"></i> 上周商户订单报表 </a></li>
+                        <li><a href="/order_park_data"><i class="fa fa-circle-o"></i> 园区订单报表 </a></li>
+                        <!--<li><a href="/order_distribution"><i class="fa fa-circle-o"></i> 用户订单分布 </a></li>-->
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="/search">
+                        <i class="fa fa-search"></i>
+                        <span>数据检索</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>活动定向分析</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/activity/214"><i class="fa fa-circle-o"></i> 情人节活动 </a></li>
+                        <li><a href="/activity/small_game"><i class="fa fa-circle-o"></i> 小游戏推广 </a></li>
+                        <li><a href="/activity/coupon_get"><i class="fa fa-circle-o"></i> 抢券活动 </a></li>
+                        <li><a href="/activity/happy_gift"><i class="fa fa-circle-o"></i> 欢乐送推广 </a></li>
+                        <li><a href="/activity/wehome_set"><i class="fa fa-circle-o"></i> wehome套餐 </a></li>
+                        <li><a href="/activity/invite"><i class="fa fa-circle-o"></i> 邀请好友 </a></li>
+                        <li><a href="/activity/comunity_beauty"><i class="fa fa-circle-o"></i> 最美社群天使 </a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>用户活跃度分析</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/live/week"><i class="fa fa-circle-o"></i> 周活跃度 </a></li>
+                        <li><a href="/live/total_view"><i class="fa fa-circle-o"></i> 园区用户总览 </a></li>
+                        <li><a href="/live/total_nodobe"><i class="fa fa-circle-o"></i> 园区用户总览（非德必） </a></li>
+                        <li><a href="/live/user_leave"><i class="fa fa-circle-o"></i> 月用户留存率 </a></li>
+                        <li><a href="/live/user_remain_nodobe"><i class="fa fa-circle-o"></i> 月用户留存率(非德必) </a></li>
+                        <li><a href="/live/remain_table"><i class="fa fa-circle-o"></i> 用户留存率 </a></li>
+                        <li><a href="/live/remain_table_nodobe"><i class="fa fa-circle-o"></i> 用户留存率(非德必) </a></li>
+                        <li><a href="/live/week_percentage"><i class="fa fa-circle-o"></i> 周登录比例分析 </a></li>
+                        <li><a href="/live/percentage_nodobe"><i class="fa fa-circle-o"></i> 周登录比例(非德必)分析 </a></li>
+                        <li><a href="/live/week_static"><i class="fa fa-circle-o"></i> 周登录人数分析 </a></li>
+                        <li><a href="/live/login_times"><i class="fa fa-circle-o"></i> 登录次数分析 </a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>会员活跃度分析</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/active_user/day"><i class="fa fa-circle-o"></i> 日活跃度 </a></li>
+                        <li><a href="/active_user/week"><i class="fa fa-circle-o"></i> 周活跃度 </a></li>
+                        <li><a href="/active_user/month"><i class="fa fa-circle-o"></i> 月活跃度 </a></li>
+                        <li><a href="/remain_rate"><i class="fa fa-circle-o"></i> 月留存率 </a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>app分析报表</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/app/app_outline"><i class="fa fa-circle-o"></i> app总览 </a></li>
+                        <li><a href="/app/app_download"><i class="fa fa-circle-o"></i> app下载渠道统计 </a></li>
+                        <li><a href="/app/sep_by_park"><i class="fa fa-circle-o"></i> app各园区使用情况 </a></li>
+                        <li><a href="/app/app_user"><i class="fa fa-circle-o"></i> app会员数 </a></li>
+                    </ul>
+                </li>
+                {% if view_page.login_name == "penguin" %}
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-folder"></i>
+                            <span>账号与权限</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/admin/add"><i class="fa fa-circle-o"></i> 添加管理员 </a></li>
+                            <li><a href="/admin/list"><i class="fa fa-circle-o"></i> 管理员 </a></li>
+                            <li><a href="/admin/auth"><i class="fa fa-circle-o"></i> 权限分配 </a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+
+                {% if view_page.login_name == "wuhao" or view_page.login_name == "bi_admin" %}
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-folder"></i>
+                            <span>系统配置</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/refresh_db"><i class="fa fa-circle-o"></i> 数据库刷新 </a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>权限管理</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/role/group"><i class="fa fa-circle-o"></i> 权限组管理 </a></li>
+                        <li><a href="/role/vector"><i class="fa fa-circle-o"></i> 权限维度管理 </a></li>
+                        <li><a href="/role/list/999"><i class="fa fa-circle-o"></i> 权限管理 </a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                {% block cus_content_title %}
+                    Page Header
+                    <small>Optional description</small>
+                {% endblock %}
+
+            </h1>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div>
+                {% block cus_search %}
+                    <form id="form1" class="stdform" method="post" action="">
+                        {% csrf_token %}
+                        <input id="date-duration" type="hidden" value="{{ doc_filter.date_duration }}"
+                               name="date-duration">
+                        <!-- 时间段选择 -->
+                        <div style="overflow: hidden;">
+                            <div style="float: left;">
+                                <span style="height: 34px; line-height: 34px;">时间周期：</span>
+                                <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                            <span>
+                              <i class="fa fa-calendar"></i>
+                                {% if doc_filter.date_duration %}
+                                    {{ doc_filter.date_duration }}
+                                {% else %}
+                                    选择时间段
+                                {% endif %}
+                            </span>
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                            </div>
+                            <div style="float: left;">
+                                <!-- 小时断选择 -->
+                                <select class="form-control select2" style="width: 120px;" name="select-hour-duration">
+                                    <option value="00:00-00:00"
+                                            {% if doc_filter.select_hour_duration == "00:00-00:00" %}selected{% endif %}>
+                                        00:00-00:00
+                                    </option>
+                                    <option value="16:00-16:00"
+                                            {% if doc_filter.select_hour_duration == "16:00-16:00" %}selected{% endif %}>
+                                        16:00-16:00
+                                    </option>
+                                    <option value="17:00-17:00"
+                                            {% if doc_filter.select_hour_duration == "17:00-17:00" %}selected{% endif %}>
+                                        17:00-17:00
+                                    </option>
+                                </select>
+                            </div>
+                            <div style="float: left; margin-left: 30px;">
+                                <button type="submit" class="btn btn-facebook pull-right">查询</button>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    {#                    <div>#}
+                    {#                        <span style="height: 34px; line-height: 34px;">显示字段：</span>#}
+                    {#                        <select multiple="multiple" class="form-control select2 select-display-field">#}
+                    {#                            <option value="1">1</option>#}
+                    {#                            <option value="1">1</option>#}
+                    {#                            <option value="1">1</option>#}
+                    {#                            <option value="1">1</option>#}
+                    {#                            <option value="1">1</option>#}
+                    {#                            <option value="1">1</option>#}
+                    {#                            <option value="30">30</option>#}
+                    {#                        </select>#}
+                    {#                    </div>#}
+
+                    {#                    <div>#}
+                    {#                        <a href="#">查询</a>#}
+                    {#                    </div>#}
+
+
+                {% endblock %}
+            </div>
+            <div>
+                {% block cus_content %}
+
+                {% endblock %}
+            </div>
+
+            <!-- Your Page Content Here -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            BI SYSTEM
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2017 <a href="#">WEHOME</a>.</strong> All rights reserved.
+    </footer>
+
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="{{ STATIC_URL }}plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- AdminLTE App -->
+
+<script src="{{ STATIC_URL }}plugins/select2/select2.full.min.js"></script>
+<script src="{{ STATIC_URL }}multiple-select/multiple-select.js"></script>
+<script src="{{ STATIC_URL }}plugins/daterangepicker/moment.min.js"></script>
+<script src="{{ STATIC_URL }}plugins/daterangepicker/daterangepicker.js"></script>
+
+
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/Bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}plugins/datatables/extensions/JSZip-2.5.0/jszip.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/pdfmake-0.1.18/build/pdfmake.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/pdfmake-0.1.18/build/vfs_fonts.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/DataTables-1.10.13/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/DataTables-1.10.13/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/AutoFill-2.1.3/js/dataTables.autoFill.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/AutoFill-2.1.3/js/autoFill.bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/Buttons-1.2.4/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/Buttons-1.2.4/js/buttons.bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/Buttons-1.2.4/js/buttons.colVis.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/Buttons-1.2.4/js/buttons.flash.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/Buttons-1.2.4/js/buttons.html5.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/Buttons-1.2.4/js/buttons.print.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/ColReorder-1.3.2/js/dataTables.colReorder.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/FixedColumns-3.2.2/js/dataTables.fixedColumns.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/FixedHeader-3.1.2/js/dataTables.fixedHeader.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/KeyTable-2.2.0/js/dataTables.keyTable.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/Responsive-2.1.1/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/Responsive-2.1.1/js/responsive.bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/RowReorder-1.2.0/js/dataTables.rowReorder.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/Scroller-1.4.2/js/dataTables.scroller.min.js"></script>
+<script type="text/javascript"
+        src="{{ STATIC_URL }}plugins/datatables/extensions/Select-1.2.0/js/dataTables.select.min.js"></script>
+
+
+<script src="{{ STATIC_URL }}plugins/highcharts/highcharts.js"></script>
+
+<script src="{{ STATIC_URL }}dist/js/app.min.js"></script>
+<script src="{{ STATIC_URL }}dist/js/demo.js"></script>
+
+{% block cus_footer %}
+
+{% endblock %}
+
+<script>
+    $(function () {
+
+        //菜单状态设置开始------------------------------------
+        var current_url = "{{ view_page.current_path }}";
+        var select_name = 'a[href="' + current_url + '"]';
+        //alert($(select_name).text());
+        var base_node = $(select_name).parent('li');
+        var clasest_ul = base_node.closest('ul');
+
+        base_node.addClass('active');
+
+        function setActiveClass(clasest_ul) {
+            console.log(clasest_ul.attr('class'));
+            if (clasest_ul.attr('class') == 'treeview-menu') {
+                clasest_ul.addClass('menu-open');
+                clasest_ul.closest('li').addClass('active');
+                setActiveClass(clasest_ul.closest('ul'));
+            } else {
+                console.log(111);
+                return;
+            }
+        }
+
+        setActiveClass(clasest_ul);
+        //菜单状态设置结束------------------------------------
+
+
+        {#        $("li").each(function(){#}
+        {#            alert($(this).text())#}
+        {#          });#}
+
+        {#        $("#setSelectsBtn").click(function() {#}
+        {#            $("select").multipleSelect("setSelects", [1, 3]);#}
+        {#        });#}
+        {#        $("#getSelectsBtn").click(function() {#}
+        {#            alert("Selected values: " + $("select").multipleSelect("getSelects"));#}
+        {#            alert("Selected texts: " + $("select").multipleSelect("getSelects", "text"));#}
+        {#        });#}
+
+
+        //Initialize Select2 Elements
+        $(".select2").select2({
+            minimumResultsForSearch: -1
+        });
+
+        {#        $(".select-display-field").multipleSelect({#}
+        {#            width: 460,#}
+        {#            multiple: true,#}
+        {#            multipleWidth: 55#}
+        {#        });#}
+
+        //Date range picker
+        $('#daterange-btn').daterangepicker(
+            {
+                autoApply: true,
+                defaultDate: new Date(2000, 1, 1),
+                ranges: {
+                    '今天': [moment(), moment()],
+                    '昨天': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    '最近7天': [moment().subtract(6, 'days'), moment()],
+                    '最近15天': [moment().subtract(14, 'days'), moment()],
+                    '最近30天': [moment().subtract(29, 'days'), moment()],
+                    '本/': [moment().startOf('month'), moment().endOf('month')],
+                    '上个/': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment(),
+                locale: {
+                    format: 'YYYY/M/D',
+                    separator: ' - ',
+                    applyLabel: '确定',
+                    cancelLabel: '取消',
+                    weekLabel: 'W',
+                    customRangeLabel: '自定义',
+                    daysOfWeek: moment.weekdaysMin(),
+                    monthNames: moment.monthsShort(),
+                    firstDay: moment.localeData().firstDayOfWeek()
+                }
+            },
+            function (start, end) {
+                var date_duration = start.format('YYYY/M/D') + '-' + end.format('YYYY/M/D');
+                $('#daterange-btn span').html(date_duration);
+                $('#date-duration').val(date_duration)
+            }
+        );
+
+        $('#table-content tbody')
+            .on('mouseenter', 'td', function () {
+                var table = $('#table-content').DataTable();
+                var colIdx = table.cell(this).index().column;
+
+                $(table.cells().nodes()).removeClass('highlight');
+                $(table.column(colIdx).nodes()).addClass('highlight');
+            });
+    });
+</script>
+
+</body>
+</html>

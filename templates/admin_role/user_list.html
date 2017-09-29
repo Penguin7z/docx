@@ -1,0 +1,139 @@
+{% extends "master.html" %}
+
+{% load filter %}
+
+{% block cus_content_title %}
+    权限组管理
+{% endblock %}
+
+{% block cus_search %}
+
+{% endblock %}
+
+{% block cus_content %}
+
+    <div class="box">
+        <div class="box-body">
+            <!-- Custom Tabs (Pulled to the right) -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+
+                    <li class="active">
+                        <a href="#tab_1-1" data-toggle="tab">权限组列表</a>
+                    </li>
+
+                </ul>
+                <div style="float: right;">
+                    <a id="add-new-role-group">添加权限组</a>
+                </div>
+                <div class="tab-content">
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane active" id="tab_1-1">
+
+
+                        <table id="table-content"
+                               class="table table-bordered table-striped dataTable table-hover"
+                               style="width: 100%;">
+                            <tr>
+                                <th style="text-align: center; vertical-align: middle;">ID</th>
+                                <th style="text-align: center; vertical-align: middle;">用户名</th>
+                                <th style="text-align: center; vertical-align: middle;">所属权限组</th>
+                                <th style="text-align: center; vertical-align: middle;">操作</th>
+                            </tr>
+                            {% for item in data %}
+                                <tr>
+                                    <td>{{ item.user_id }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>
+                                        {% if item.admin_group_id %}
+                                            {{ item.admin_group_str }}
+                                        {% else %}
+                                            <a href="javascript:setRoleGroup({{ item.user_id }})">设置组</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a
+                                                href="{% if item.admin_group_id %}
+                                    /role/user/{{ item.user_id }}
+                                {% else %}
+                                    javascript:(alert('请先设置用户所属权限组'));
+                                {% endif %}">
+                                            分配权限
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
+
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="rolegroupModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">选择权限组</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="rolegroup" action="">
+                        {% csrf_token %}
+                        {% for item in data_list %}
+                            <label class="radio-inline">
+                                <input type="radio" name="groupid"
+                                       id="inlineRadio1"
+                                       value="{{ item.id }}"> {{ item.name }}
+                            </label>
+                        {% endfor %}
+                        <input type="hidden" name="userid"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">取消
+                    </button>
+                    <button type="button" class="btn btn-primary"
+                            onclick="setGroup()" data-complete-text="确定"
+                            data-loading-text="加载中...">确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock %}
+
+{% block cus_footer %}
+
+    <script>
+        function setRoleGroup(userid) {
+            $('input[name="userid"]').val(userid);
+            $('#rolegroupModal').modal('show');
+        }
+
+        function setGroup() {
+            var thisbutton = $(event.currentTarget);
+            thisbutton.button('loading');
+            $.post("/role/list/999", $('form[name="rolegroup"]').serialize(), function (data) {
+                thisbutton.button('complete');
+                $('form[name="rolegroup"]')[0].reset();
+                data = JSON.parse(data);
+                if (data.status === 200) {
+                    window.location.reload();
+                } else {
+                    alert(data.msg);
+                }
+            });
+        }
+
+    </script>
+
+{% endblock %}

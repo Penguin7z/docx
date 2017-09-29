@@ -1,0 +1,108 @@
+{% extends "master.html" %}
+
+{% block cus_content_title %}
+    用户活跃度周报（人数）
+{% endblock %}
+
+{% block cus_content %}
+
+    <div class="box">
+        <div class="box-header">
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <!-- Custom Tabs (Pulled to the right) -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li><a href="#tab_1-1" data-toggle="tab">周大于一次活跃注册用户</a></li>
+                    <li><a href="#tab_1-2" data-toggle="tab">周大于二次活跃注册用户</a></li>
+                    <li><a href="#tab_1-3" data-toggle="tab">去除支付周大于一次活跃注册用户</a></li>
+                    <li><a href="#tab_1-4" data-toggle="tab">去除支付周大于二次活跃注册用户</a></li>
+                </ul>
+                <div class="tab-content">
+                    <br>
+                    <br>
+                    <div class="tab-pane active" id="tab_1-1">
+
+                        <table id="table-content-week-cnt1"
+                               class="table table-bordered table-striped dataTable table-hover">
+                            {% autoescape off %}{{ week_times_1 }}{% endautoescape %}
+                        </table>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_1-2">
+                        <table id="table-content-week-cnt2"
+                               class="table table-bordered table-striped dataTable table-hover">
+                            {% autoescape off %}{{ week_times_2 }}{% endautoescape %}
+                        </table>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                    <div class="tab-pane" id="tab_1-3">
+                        <table id="table-content-no-pay-cnt1"
+                               class="table table-bordered table-striped dataTable table-hover">
+                            {% autoescape off %}{{ week_no_pay_1 }}{% endautoescape %}
+                        </table>
+                    </div>
+                    <!-- /.tab-pane -->
+
+                    <div class="tab-pane" id="tab_1-4">
+                        <table id="table-content-no-pay-cnt2"
+                               class="table table-bordered table-striped dataTable table-hover">
+                            {% autoescape off %}{{ week_no_pay_2 }}{% endautoescape %}
+                        </table>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+
+
+{% endblock %}
+
+{% block cus_footer %}
+
+    <script>
+        $(function () {
+            var _html1 = $(".dataframe").html();
+            console.log(_html);
+            $(".dataframe").remove();
+            $("#table-content-pandect").html(_html1);
+            $('#table-content-week-cnt1', '#table-content-week-cnt2', '#table-content-no-pay-cnt1',
+                '#table-content-no-pay-cnt2').DataTable({
+                "fixedHeader": true,
+                "pageLength": 25,
+                "scrollY": "50vh",
+                "scrollX": true,
+                "scrollCollapse": true,
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "language": {
+                    "info": "页 _PAGE_ / _PAGES_",
+                    "lengthMenu": "每页 _MENU_ 条",
+                    "paginate": {
+                        "previous": "向前 ",
+                        "next": " 向后"
+                    }
+                },
+                "fixedColumns": {
+                    leftColumns: 1
+                },
+                "order": [[3, "desc"]]
+
+            });
+
+        });
+    </script>
+
+{% endblock %}

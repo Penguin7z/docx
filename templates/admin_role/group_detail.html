@@ -1,0 +1,86 @@
+{% extends "master.html" %}
+
+{% load filter %}
+
+{% block cus_content_title %}
+    权限组管理
+{% endblock %}
+
+{% block cus_search %}
+
+{% endblock %}
+
+{% block cus_content %}
+
+    <div class="box">
+        <div class="box-body">
+            {% for item in vector_list %}
+                <h3>{{ item.name }}</h3>
+                <div>
+                {% if item.vector_type == 5 %}
+                    {% for menu in item.vector_list %}
+                        <h4>{{ menu.menu_info.name }}</h4>
+                        <div>
+                            {% for i in menu.sub_menu_list %}
+                                <label class="checkbox-inline">
+                                    <input name="{{ item.alias }}" type="checkbox" {% if i.role_own == 1 or i.value == '1' %}
+                                           checked {% endif %}
+                                           id="inlineCheckbox1" value="{{ i.id }}"> {{ i.name }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% for i in item.vector_list %}
+                        <label class="checkbox-inline">
+                            <input name="{{ item.alias }}" type="checkbox" {% if i.role_own == 1 or i.value == '1' %}
+                                   checked {% endif %}
+                                   id="inlineCheckbox1" value="{{ i.id }}"> {{ i.name }}
+                        </label>
+                    {% endfor %}
+                {% endif %}
+
+                </div>
+                <hr>
+            {% endfor %}
+        <button type="button" class="btn btn-primary" onclick="edit()">保存</button>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+    <form>
+        {% csrf_token %}
+    </form>
+
+
+{% endblock %}
+
+{% block cus_footer %}
+
+    <script>
+    function edit() {
+        var params = {
+            group_id: '{{ group_id }}',
+            csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val()
+        };
+        $.each($('input[type="checkbox"]:checked'), function (index, ele) {
+            params[$(ele).attr('name')] = JSON.parse(params[$(ele).attr('name')]||'[]');
+            params[$(ele).attr('name')].push($(ele).val());
+            params[$(ele).attr('name')] = JSON.stringify(params[$(ele).attr('name')])
+        });
+        console.log(params);
+        $.post("/role/group/config/", params, function (data) {
+            data = JSON.parse(data);
+            if (data.status === 200) {
+                alert("修改成功");
+                window.location.reload();
+            } else {
+                alert(data.msg);
+            }
+        });
+    }
+
+
+    </script>
+
+{% endblock %}

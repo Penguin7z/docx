@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Minimal Django File Upload Example</title>
+</head>
+<body>
+
+<!-- Upload form. Note enctype attribute! -->
+<div style="padding: 20px;">
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <h1>
+            选择两张图片
+        </h1>
+    </div>
+    <div>
+        <input type="file" name="img_1"/>
+        <br>
+        <input type="file" name="img_2"/>
+    </div>
+
+    <input type="submit" name="submit" value="Upload"/>
+</form>
+
+</div>
+
+</body>
+</html>

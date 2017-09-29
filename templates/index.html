@@ -1,0 +1,22 @@
+{% extends "master.html" %}
+
+{% block cus_content_title %}
+    欢迎回来，{{ view_page.login_name }}
+{% endblock %}
+
+{% block cus_content %}
+
+
+
+    <div style="padding: 20px;color: red;font-size: 16px;">
+
+        {{ db_log.log_str }}
+
+
+    </div>
+
+
+
+
+
+{% endblock %}

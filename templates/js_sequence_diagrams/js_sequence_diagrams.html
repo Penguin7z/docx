@@ -1,0 +1,200 @@
+{% extends "master.html" %}
+
+{% block cus_content_title %}
+    图形
+{% endblock %}
+
+{% block cus_search %}
+
+{% endblock %}
+
+{% block cus_content %}
+{#    充值流程#}
+{#    <div id="canvas1"></div>#}
+{#    <br>#}
+{#    <br>#}
+{#    余额支付流程#}
+{#    <div id="canvas2"></div>#}
+{#    <br>#}
+{#    <br>#}
+{#    第三方支付流程#}
+{#    <div id="canvas3"></div>#}
+
+    <div id="diagram_chongzhi"></div>
+
+
+{% endblock %}
+
+{% block cus_footer %}
+    <script src="{{ STATIC_URL }}js-sequence-diagrams/webfont.js"></script>
+    <script src="{{ STATIC_URL }}js-sequence-diagrams/snap.svg-min.js"></script>
+    <script src="{{ STATIC_URL }}js-sequence-diagrams/underscore-min.js"></script>
+    <script src="{{ STATIC_URL }}js-sequence-diagrams/sequence-diagram-min.js"></script>
+    <script src="{{ STATIC_URL }}js-sequence-diagrams/raphael.min.js"></script>
+    <script src="{{ STATIC_URL }}js-sequence-diagrams/flowchart.min.js"></script>
+
+    <script>
+        {#        $(function () {#}
+        {#            $(".diagram").sequenceDiagram({theme: 'simple'});#}
+        {#        });#}
+
+        // 充值 re_charge
+        // 余额支付 pay_by_balance
+        // 退款 refunds
+        //
+
+        var diagram_str_chongzhi = "" +
+            "用户->交易系统:充值" +
+            "交易系统-->验签系统:获取验签号" +
+{#            "交易系统->订单系统:创建订单" +#}
+{#            "交易系统->第三方支付系统:通信，创建预支付单" +#}
+{#            "交易系统->用户:通知用户支付" +#}
+{#            "用户->第三方支付系统:支付" +#}
+{#            "第三方支付系统->交易系统:回调通知用户支付结果" +#}
+{#            "交易系统->订单系统:更新订单" +#}
+            "";
+        var diagram = Diagram.parse(diagram_str_chongzhi);
+        diagram.drawSVG("diagram_chongzhi", {theme: 'simple'});
+
+        var diagram_style = {
+            'line-width': 3,
+            'maxWidth': 3,//ensures the flowcharts fits within a certian width
+            'line-length': 50,
+            'text-margin': 10,
+            'font-size': 14,
+            'font': 'normal',
+            'font-family': 'Helvetica',
+            'font-weight': 'normal',
+            'font-color': 'black',
+            'line-color': 'black',
+            'element-color': 'black',
+            'fill': 'white',
+            'yes-text': 'yes',
+            'no-text': 'no',
+            'arrow-end': 'block',
+            'scale': 1,
+            'symbols': {
+                'start': {
+                    'font-color': 'red',
+                    'element-color': 'green',
+                    'fill': 'yellow'
+                },
+                'end': {
+                    'class': 'end-element'
+                }
+            },
+            'flowstate': {
+                'past': {'fill': '#CCCCCC', 'font-size': 12},
+                'current': {'fill': 'yellow', 'font-color': 'red', 'font-weight': 'bold'},
+                'future': {'fill': '#FFFF99'},
+                'request': {'fill': 'blue'},
+                'invalid': {'fill': '#444444'},
+                'approved': {'fill': '#58C4A3', 'font-size': 12, 'yes-text': 'APPROVED', 'no-text': 'n/a'},
+                'rejected': {'fill': '#C45879', 'font-size': 12, 'yes-text': 'n/a', 'no-text': 'REJECTED'}
+            }
+        };
+
+{#        "st=>start: Start|past:>http://www.google.com[blank]\n" +#}
+{#                "e=>end: End:>http://www.google.com\n" +#}
+{#                "op1=>operation: My Operation|past\n" +#}
+{#                "op2=>operation: Stuff|current\n" +#}
+{#                "sub1=>subroutine: My Subroutine|invalid\n" +#}
+{#                "cond=>condition: Yes\n" +#}
+{#                "or No?|approved:>http://www.google.com\n" +#}
+{#                "c2=>condition: Good idea|rejected\n" +#}
+{#                "io=>inputoutput: catch something...|request\n" +#}
+{##}
+{#                "st->op1(right)->cond\n" +#}
+{#                "cond(yes, right)->c2\n" +#}
+{#                "cond(no)->sub1(left)->op1\n" +#}
+{#                "c2(yes)->io->e\n" +#}
+{#                "c2(no)->op2->e;\n";#}
+
+        diagram_style = {};
+
+
+        window.onload = function () {
+            return;
+            var code1 = "" +
+                "st=>start: 开始\n" +
+                "e=>end: 结束\n" +
+                "op1=>operation: 用户充值\n" +
+                "op2=>operation: 交易系统\n" +
+                "op3=>operation: 验签系统\n" +
+                "op4=>operation: 订单系统\n" +
+                "op5=>operation: 用户支付\n" +
+                "op6=>operation: 资金系统\n" +
+                "sub1=>subroutine: My Subroutine|invalid\n" +
+                "cond1=>condition: 用户信息验证\n" +
+                "cond2=>condition: 风控系统\n" +
+                "cond3=>condition: 支付成功\n" +
+                "io=>inputoutput: catch something...|request\n" +
+                "st->op1->op2->cond1\n" +
+                "cond1(yes)->cond2\n" +
+                "cond1(no, right)->e\n" +
+                "cond2(yes)->op4->op5->cond3->e\n" +
+                "cond3(no, right)->e\n" +
+                "cond3(yes, left)->op6->e\n" +
+                "cond2(no, right)->e\n";
+
+            var chart1 = flowchart.parse(code1);
+            chart1.drawSVG('canvas1', diagram_style);
+
+
+            var code2 = "" +
+                "st=>start: 开始\n" +
+                "e=>end: 结束\n" +
+                "op1=>operation: 用户充值\n" +
+                "op2=>operation: 交易系统\n" +
+                "op3=>operation: 验签系统\n" +
+                "op4=>operation: 订单系统\n" +
+                "op5=>operation: 用户支付\n" +
+                "op6=>operation: 资金系统\n" +
+                "sub1=>subroutine: My Subroutine|invalid\n" +
+                "cond1=>condition: 用户信息验证\n" +
+                "cond2=>condition: 风控系统\n" +
+                "cond3=>condition: 支付成功\n" +
+                "io=>inputoutput: catch something...|request\n" +
+                "st->op1->op2->cond1\n" +
+                "cond1(yes)->cond2\n" +
+                "cond1(no, right)->e\n" +
+                "cond2(yes)->op4->op5->cond3->e\n" +
+                "cond3(no, right)->e\n" +
+                "cond3(yes, left)->op6->e\n" +
+                "cond2(no, right)->e\n";
+
+            var chart2 = flowchart.parse(code2);
+            chart2.drawSVG('canvas2', diagram_style);
+
+
+            var code3 = "" +
+                "st=>start: 开始\n" +
+                "e=>end: 结束\n" +
+                "op1=>operation: 用户充值\n" +
+                "op2=>operation: 交易系统\n" +
+                "op3=>operation: 验签系统\n" +
+                "op4=>operation: 订单系统\n" +
+                "op5=>operation: 用户支付\n" +
+                "op6=>operation: 资金系统\n" +
+                "sub1=>subroutine: My Subroutine|invalid\n" +
+                "cond1=>condition: 用户信息验证\n" +
+                "cond2=>condition: 风控系统\n" +
+                "cond3=>condition: 支付成功\n" +
+                "io=>inputoutput: catch something...|request\n" +
+                "st->op1->op2->cond1\n" +
+                "cond1(yes)->cond2\n" +
+                "cond1(no, right)->e\n" +
+                "cond2(yes)->op4->op5->cond3->e\n" +
+                "cond3(no, right)->e\n" +
+                "cond3(yes, left)->op6->e\n" +
+                "cond2(no, right)->e\n";
+
+            var chart3 = flowchart.parse(code3);
+            chart3.drawSVG('canvas3', diagram_style);
+
+        };
+
+    </script>
+
+{% endblock %}
+

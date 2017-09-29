@@ -1,0 +1,38 @@
+{% extends "master.html" %}
+
+{% block cus_content_title %}
+    {{ activity_info.title }}
+{% endblock %}
+
+{% block cus_content %}
+
+    <table cellpadding="0" cellspacing="0" border="0" class="table table-hover">
+
+        <colgroup>
+            {% for item in  header_list %}
+                <col/>
+            {% endfor %}
+        </colgroup>
+        <thead>
+        <tr>
+            {% for item in  header_list %}
+                <th style="text-align: center; vertical-align: middle;">{{ item }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for item in  detail_list %}
+            <tr>
+                {% for text in  item %}
+                    <td style="text-align: center; vertical-align: middle;">
+                        {{ text }}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock %}
