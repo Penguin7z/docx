@@ -1,0 +1,27 @@
+-i https://pypi.tuna.tsinghua.edu.cn/simple
+gearman
+redis
+pymongo
+configobj
+pytz
+PyYAML
+requests
+ujson
+xmltodict
+dicttoxml
+APScheduler
+funcsigs
+tzlocal
+futures
+ua-parser
+user-agents
+python-dateutil
+oss2
+xlsxwriter
+numpy
+pycrypto
+rsa
+pyopenssl
+celery
+blinker==1.4
+django
