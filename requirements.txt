@@ -1,5 +1,7 @@
 -i https://pypi.tuna.tsinghua.edu.cn/simple
-gearman
+Eve==0.6.1
+eve_swagger
+tornado
 redis
 pymongo
 configobj
